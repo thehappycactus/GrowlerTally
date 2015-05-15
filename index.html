@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="GrowlerTally">
+	<head>
+		<title>Growler Tally</title>
+		<link rel="stylesheet" href="css/lumx.css">
+		<link rel="stylesheet" href="css/materialdesignicons.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/growler-tally.css">
+	</head>
+
+	<body ng-controller="CustomerListControl as custController">
+		<div flex-container="row" class="main">
+			<div flex-item="12">
+				<img src="assets/growler.svg" class="main">
+				<h1>GrowlerTally</h1>
+				<p>A customer growler-tracker for The Beer Growler Brookhaven</p>
+			</div>
+		</div>
+
+		<div flex-container="row" flex-gutter="12">
+			<div flex-item="2"></div>
+			<div flex-item="8">
+				<div class="card">
+					<div class="toolbar">
+						<lx-search-filter model="custController.filterText" filter-width="100%" placeholder="Search"></lx-search-filter>
+					</div>
+				</div>
+			</div>
+			<div flex-item="2"></div>
+		</div>
+
+		<div flex-container="row" flex-gutter="12">
+		<div flex-item="12">
+			<div class="data-table-container growler-table">
+				<table class="data-table data-table--has-primary data-table--has-secondary">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Last Name</th>
+							<th>First Name</th>
+							<th>Phone Number</th>
+							<th>Growler Count</th>
+							<th></th>
+							<th></th>
+							<th>
+								<button class="btn btn--m btn--blue btn--raised" ng-click="custController.openAddDialog('newCustomer')" lx-ripple>
+									<i class="mdi mdi-plus">Customer</i>
+								</button>
+							</th>
+						</tr>
+						<tr>
+							<td colspan="8" class="divider divider--dark"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="customer in custController.customers | filter:custController.filterText" class="data-table__clickable-row">
+							<td>{{customer.index}}</td>
+							<td>{{customer.lName}}</td>
+							<td>{{customer.fName}}</td>
+							<td>{{customer.phoneNbr}}</td>
+							<td>{{customer.count}}</td>
+							<td>
+								<button class="btn btn--m btn--red btn--fab" 
+									lx-ripple
+									ng-click="custController.decGrowlerCount(customer.id, customer.index)">
+									<i class="mdi mdi-minus"></i>
+								</button>
+							</td>
+							<td>
+								<button class="btn btn--m btn--blue btn--fab" 
+									lx-ripple 
+									ng-click="custController.incGrowlerCount(customer.id, customer.index)">
+									<i class="mdi mdi-plus"></i>
+								</button>
+							</td>
+							<td>
+								<button class="btn btn--m btn--green btn--fab" 
+									lx-ripple
+									ng-click="custController.openUpdateDialog(customer.index)">
+									<i class="mdi mdi-pencil"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		</div>
+
+
+		<div flex-container="row" class="footer">
+			<div flex-item="12">
+				Version 0.1.0a<br>
+				&copy;2015 <a href="http://www.happycactusdev.com">Happy Cactus Dev</a>
+			</div>
+		</div>
+	</body>
+
+	<lx-dialog class="dialog dialog--l" id="newCustomer" onclose="closingDialog()">
+		<div class="dialog__header">
+			<div class="bgc-purple-900 pl++">
+				<span class="tc-white-1 fs-title">Add New Customer</span>
+			</div>
+		</div>
+
+		<div class="dialog__content">
+			<div flex-container="row" flex-gutter="24">
+				<div flex-item="4">
+					<lx-text-field label="First Name">
+			        	<input type="text" ng-model="custController.firstName">
+			        </lx-text-field>
+			    </div>
+			    <div flex-item="4">
+			        <lx-text-field label="Last Name">
+			        	<input type="text" ng-model="custController.lastName">
+			        </lx-text-field>
+				</div>
+			</div>
+					
+			<div flex-container="row" flex-gutter="24">
+				<div flex-item="4">
+					<lx-text-field label="Phone number" fixed-label="true" error="!custController.emailValidation(textFields.phoneNumber)">
+                		<input type="text" ng-model="custController.phoneNumber">
+            		</lx-text-field>
+				</div>
+				
+				<div flex-item="2">
+					<lx-text-field label="Quantity" fixed-label="true">
+						<input type="number" ng-model="custController.quantity">
+					</lx-text-field>
+				</div>
+
+				<div flex-item="6">
+					<div class="dialog__actions">
+	        			<button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Cancel</button>
+	        			<button class="btn btn--m btn--black btn--flat" ng-click="custController.addCustomer($event)" lx-ripple>Add Customer</button>
+	        		</div>
+	        	</div>
+			</div>
+		</div>
+	</ld-dialog>
+
+	<!--<lx-dialog class="dialog dialog--l" id="updateCustomer" onclose="closingDialog()">
+		<div class="dialog__header">
+			<div class="bgc-purple-900 pl++">
+				<span class="tc-white-1 fs-title">Edit Customer</span>
+			</div>
+		</div>
+
+		<div class="dialog__content">
+
+			<div flex-container="row" flex-gutter="24">
+				<div flex-item="4">
+					<lx-text-field label="First Name">
+			        	<input type="text" ng-model="custController.uFirstName">
+			        </lx-text-field>
+			    </div>
+			    <div flex-item="4">
+			        <lx-text-field label="Last Name">
+			        	<input type="text" ng-model="custController.uLastName">
+			        </lx-text-field>
+				</div>
+			</div>
+					
+			<div flex-container="row" flex-gutter="24">
+				<div flex-item="4">
+					<lx-text-field label="Phone number" fixed-label="true" error="!custController.emailValidation(textFields.phoneNumber)">
+                		<input type="text" ng-model="custController.uPhoneNumber">
+            		</lx-text-field>
+				</div>
+				
+				<div flex-item="2">
+					<lx-text-field label="Quantity" fixed-label="true">
+						<input type="number" ng-model="custController.uQuantity">
+					</lx-text-field>
+				</div>
+
+				<div flex-item="6">
+					<div class="dialog__actions">
+	        			<button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Cancel</button>
+	        			<button class="btn btn--m btn--black btn--flat" ng-click="custController.updateCustomer($event)" lx-ripple>Update Customer Info</button>
+	        		</div>
+	        	</div>
+			</div>
+		</div>
+	</lx-dialog>-->
+
+	<script src="js/lib/jquery.js"></script>
+	<script src="js/lib/velocity.js"></script>
+	<script src="js/lib/moment.js"></script>
+	<script src="js/lib/angular.js"></script>
+	<script src="js/lib/angular-resource.js"></script>
+	<script src="js/lib/lumx.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/objects/AuthConstants.js"></script>
+	<script src="js/objects/Categories.js"></script>
+	<script src="js/objects/CategoryItems.js"></script>
+	<script src="js/objects/ItemStocks.js"></script>
+	<script src="js/objects/Item.js"></script>
+	<script src="js/objects/Items.js"></script>
+	<script src="js/CustomerListController.js"></script>
+</html>

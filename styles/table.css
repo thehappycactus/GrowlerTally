@@ -1,0 +1,37 @@
+customerTable {
+	@include outer-container;
+	text-align: center;
+
+	tableTitle { 
+		@include fill-parent; 
+		@include row(customerTable);
+		font-size: 4em;
+		background-color: white;
+	}
+
+	tableRow { 
+		@include row(customerTable);
+
+		colHeader { 
+			@include span-columns(2);
+			font-size: 2em;
+			background-color: green;
+		 }
+
+		 colData { 
+			@include span-columns(2); 
+		}
+		
+	}
+}
+
+
+
+
+
+	
+
+
+
+
+

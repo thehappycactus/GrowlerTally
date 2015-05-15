@@ -1,0 +1,16 @@
+{
+  "name": "GrowlerTally",
+  "version": "1.0.0",
+  "description": "WebApp for tracking customer's growlers for TBG Brookhaven",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mary Gezo",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-uglify": "^0.9.1"
+  }
+}

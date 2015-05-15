@@ -1,0 +1,24 @@
+{
+  "name": "GrowlerTally",
+  "version": "0.0.0",
+  "authors": [
+    "Mary Gezo"
+  ],
+  "description": "WebApp for tracking customer's growlers for TBG Brookhaven",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "growlertally.happycactusdev.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.3.15",
+    "lumx": "~0.3.25",
+    "animate.css": "~3.2.6",
+    "angular-resource": "~1.3.15"
+  }
+}
